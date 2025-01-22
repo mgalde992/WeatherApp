@@ -1,108 +1,97 @@
-# Weather Application
+# Weather App Backend Documentation
 
-A simple weather application that retrieves current weather data based on city input. Built with Laravel for the backend and Vue.js for the frontend, this application utilizes the OpenWeatherMap API to fetch weather information.
+## Overview
+This backend is built using Laravel and interacts with the OpenWeatherMap API to fetch and store weather data. It includes caching to prevent redundant API requests and validation to ensure correct input. The retrieved data is stored in a MySQL database and exposed through an API endpoint.
 
-## Technologies Used
+## Features
+- Fetches current weather data for a given city from OpenWeatherMap API.
+- Caches the retrieved data for 10 minutes to minimize redundant API requests.
+- Stores weather data in a MySQL database.
+- Implements error handling for API failures and invalid inputs.
+- Provides a REST API endpoint for fetching weather data.
 
-- **Backend**: 
-  - **Laravel**: A PHP framework for building the back end.
-  - **MySQL**: For database management (or any other supported database).
+## API Endpoint
+### POST /api/weather
+#### Request Parameters:
+- city (string, required): Name of the city for which weather data is to be retrieved.
+
+#### Response:
+- On success: Returns weather data in JSON format.
+  json
+  {
+      "city": "London",
+      "temperature": 15.5,
+      "description": "clear sky",
+      "retrieved_at": "2025-01-22 12:30:45"
+  }
   
-- **Frontend**:
-  - **Vue.js**: A progressive JavaScript framework for building user interfaces.
-  - **Axios**: For making HTTP requests to the backend.
+- On failure: Returns an error message with a 500 status code.
+  json
+  {
+      "error": "Unable to fetch weather data"
+  }
+  
 
-- **API**:
-  - **OpenWeatherMap**: Provides weather data based on city input.
+## Installation & Setup
+1. Clone the repository from GitHub/Bitbucket.
+2. Navigate to the project directory and install dependencies:
+   sh
+   composer install
+   
+3. Configure the .env file:
+   
+   OPENWEATHERMAP_API_KEY=your_api_key_here
+   
+4. Run database migrations:
+   sh
+   php artisan migrate
+   
+5. Start the development server:
+   sh
+   php artisan serve
+   
 
-- **Styling**:
-  - **CSS**: Custom styles for layout and design.
-  - **Font Awesome**: For icons to enhance the visual presentation.
+## Security Measures
+- The API key is stored securely in the .env file and accessed via env().
+- Validation ensures that a valid city name is provided.
+- Caching minimizes API requests, reducing exposure to rate limits.
 
-## Running the Weather Application
+## Error Handling
+- If an invalid city name is provided, an error message is returned.
+- If the API request fails, a 500 status response is sent with an error message.
 
-Follow these steps to run the weather application on your local machine.
+## Frontend Implementation
+### Features:
+- Built using Vue.js or React.
+- User inputs a city name and submits the form to fetch weather data.
+- Displays the fetched weather data in a styled table.
+- Handles errors and provides user-friendly messages.
 
-### Prerequisites
+### Steps:
+1. Create a simple form with an input field for city name and a submit button.
+2. Make an API request to the backend using fetch or axios.
+3. Display the retrieved weather data (city name, temperature, description, and timestamp).
+4. Style the table for better user experience.
 
-Ensure you have the following installed:
+## Deployment
+- Use a hosting provider such as Heroku, AWS, or DigitalOcean for backend deployment.
+- Deploy the frontend using Vercel, Netlify, or a similar service.
+- Set environment variables securely on the hosting platform.
+- Ensure database migration is applied in the production environment.
 
-- [PHP] (version 7.4 or higher)
-- [Composer]
-- [Node.js] (version 12 or higher)
-- [npm] (Node Package Manager, comes with Node.js)
-- [MySQL] or any other supported database
+## Future Enhancements
+- Implement user authentication for additional security.
+- Add support for historical weather data.
+- Improve caching mechanism to use Redis for better scalability.
+- Enhance the UI/UX of the frontend with better design and interactivity.
+- Add unit and integration tests for improved reliability.
 
-### Step-by-Step Instructions
+## Repository & Access
+- The project is stored on GitHub/Bitbucket.
+- Clone the repository using:
+  sh
+  git clone <repository_url>
+  
+- Follow the setup instructions for running the project locally.
 
-1. **Clone the Repository**:
-
-   Open your terminal and run:
-
-   ```bash
-   git clone https://github.com/mgalde992/WeatherApp.git
-   cd weather-app
-Set Up the Backend:
-Navigate to the backend folder:
-bash
-
-Copy
-cd backend
-Install Backend Dependencies:
-bash
-
-Copy
-composer install
-Configure Environment Variables: Copy the example environment file and update it:
-bash
-
-Copy
-cp .env.example .env
-Edit the .env file with your database details and API key:
-plaintext
-
-Copy
-DB_DATABASE=your_db_name
-DB_USERNAME=your_db_user
-DB_PASSWORD=your_db_password
-OPENWEATHER_API_KEY=your_api_key_here
-Run Migrations:
-bash
-
-Copy
-php artisan migrate
-Set Up the Frontend:
-Navigate to the frontend folder:
-bash
-
-Copy
-cd ../frontend
-Install Frontend Dependencies:
-bash
-
-Copy
-npm install
-Running the Application:
-Start the Laravel Server: Open a new terminal and run:
-bash
-
-Copy
-cd backend
-php artisan serve
-Start the Vue.js Development Server: In another terminal, run:
-bash
-
-Copy
-cd ../frontend
-npm run serve
-Access the Application: Open your web browser and navigate to http://localhost:8080. You should see the weather application interface.
-Troubleshooting
-Ensure your API key is correct and that your database is properly configured.
-Check the console for error messages to identify issues.
-livecodeserver
-
-Copy
-
-### Summary
-
-This section provides a clear outline of the technologies used and the necessary steps to run the weather application. Adjust any specific details as needed to fit your project!
+For any issues or contributions, feel free to open an issue or submit a pull request on the repository.
